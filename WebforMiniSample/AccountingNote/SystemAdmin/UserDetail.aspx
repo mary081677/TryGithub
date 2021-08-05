@@ -47,19 +47,17 @@
                         <tr>
                             <th>建立時間</th>
                             <td>
-                                <asp:BoundField HeaderText="建立時間" DataField="CreateDate"
-                                    DataFormatString="{0:yyyy-MM-dd}" />
-                            </td>
+                                <asp:Literal ID="datatime" runat="server"></asp:Literal></td>
                         </tr>
-                    </table>
+            </table>
                     <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
-                    &nbsp;
+            &nbsp;
                     <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click" />
-                    <br />
-                    <asp:Button ID="btnPassword" runat="server" Text="前往變更密碼" OnClick="btnPassword_Click" />
-                    <br />
-                    <asp:Literal ID="ltMsg" runat="server"></asp:Literal>
-                </td>
+            <br />
+            <asp:Button ID="btnPassword" runat="server" Text="前往變更密碼" OnClick="btnPassword_Click" />
+            <br />
+            <asp:Literal ID="ltMsg" runat="server"></asp:Literal>
+            </td>
             </tr>
         </table>
     </form>
