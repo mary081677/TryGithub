@@ -15,6 +15,7 @@ namespace AccountingNote.DBSource
                     {ex.ToString()}
                       
                 ";
+
             System.IO.File.AppendAllText("D:\\Logs\\Log.log", msg);
             throw ex;
         }

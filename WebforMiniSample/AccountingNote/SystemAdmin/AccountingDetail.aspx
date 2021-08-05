@@ -25,7 +25,7 @@
                     <!--這裡放主要內容-->
                     TYPE:<asp:DropDownList ID="ddlActType" runat="server">
                         <asp:ListItem Value="0">支出</asp:ListItem>
-                        <asp:ListItem Value="1">支入</asp:ListItem>
+                        <asp:ListItem Value="1">收入</asp:ListItem>
                     </asp:DropDownList>
                     <br />
                     Amount: 
