@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserInfo.aspx.cs" Inherits="_0728_2.SystemAdmin.Userlnfo" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserPassword.aspx.cs" Inherits="_1.UserDetail.UserPassword" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
 </head>
 <body>
@@ -24,23 +24,28 @@
                 <td>
                     <!--這裡放主要內容-->
                     <table>
-                        <tr>                           
-                            <th>Account</th>
+                        <tr>
+                            <th>帳號</th>
                             <td>
                                 <asp:Literal runat="server" ID="ltAccount"></asp:Literal></td>
                         </tr>
                         <tr>
-                            <th>Name </th>
+                            <th>舊密碼</th>
                             <td>
-                                <asp:Literal runat="server" ID="ltName"></asp:Literal></td>
+                                <asp:TextBox ID="txtName" runat="server"></asp:TextBox></td>
                         </tr>
                         <tr>
-                            <th>Email</th>
+                            <th>確認密碼</th>
                             <td>
-                                <asp:Literal runat="server" ID="ltEmail"></asp:Literal></td>
+                                <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox></td>
+                        </tr>
+                        <tr>                            
+                            <th>新密碼</th>
+                            <td>
+                                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox></td>
                         </tr>
                     </table>
-                    <asp:Button runat="server" ID="btnLogout" Text="Logout" OnClick="btnLogout_Click" />
+                    <asp:Button ID="btnNewPassword" runat="server" Text="變更密碼" OnClick="btnNewPassword_Click" />
                 </td>
             </tr>
         </table>
