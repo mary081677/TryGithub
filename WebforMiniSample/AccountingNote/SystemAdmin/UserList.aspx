@@ -30,13 +30,11 @@
                             <asp:BoundField HeaderText="金額" DataField="Amount" />
                              <asp:TemplateField HeaderText="In/Out">
                                 <ItemTemplate>
-                                   <%-- <%# ((int)Eval("ActType") == 0) ? "支出" : "收入" %>--%>
-                                   <%--<asp:Literal runat="server" ID="ltActType"></asp:Literal>--%>
                                     <asp:Label runat="server" ID="lblActType"></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField HeaderText="建立日期" DataField="CreateDate"
-                                DataFormatString="{0:yyyy-MM-dd}" />
+                                DataFormatString="{0:yyyy-MM-dd HH:mm:ss}" />
                             <asp:TemplateField HeaderText="Act">
                                 <ItemTemplate>
                                     <a href="/SystemAdmin/AccountingDetail.aspx?ID=<%# Eval("ID") %>">Edit</a>
