@@ -59,53 +59,36 @@ namespace AccountingNote.DBSource
                     WHERE id = @id AND UserID = @userID
                 ";
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@id", id)); 
+            list.Add(new SqlParameter("@userID", userID));
+
+            try { return DBHelper.ReadDataRow(connStr, dbCommand, list); }
+            catch (Exception ex)
             {
-                using (SqlCommand comm = new SqlCommand(dbCommand, conn))
-                {
-                    comm.Parameters.AddWithValue("@id", id);
-                    comm.Parameters.AddWithValue("@userID", userID);
-
-                    try
-                    {
-                        conn.Open();
-                        var reader = comm.ExecuteReader();
-
-                        DataTable dt = new DataTable();
-                        dt.Load(reader);
-
-                        if (dt.Rows.Count == 0)
-                            return null;
-
-                        return dt.Rows[0];
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.WriteLog(ex);
-                        return null;
-                    }
-                }
+                Logger.WriteLog(ex);
+                return null;
             }
         }
 
-        /// <summary>建立流水帳</summary>
-        /// <param name="userID"></param>
-        /// <param name="caption"></param>
-        /// <param name="amount"></param>
-        /// <param name="actType"></param>
-        /// <param name="body"></param>
-        public static void CreateAccounting(string userID, string caption, int amount, int actType, string body)
-        {
-            // <<<<< check  input >>>>>
-            if (amount < 0 || amount > 1000000)
-                throw new ArgumentException("Amount must between 0 and 1,000,000 .");
-            if (actType < 0 || actType > 1)
-                throw new ArgumentException("ActType must be 0 or 1.");
-            // <<<<< check  input >>>>>
+    /// <summary>建立流水帳</summary>
+    /// <param name="userID"></param>
+    /// <param name="caption"></param>
+    /// <param name="amount"></param>
+    /// <param name="actType"></param>
+    /// <param name="body"></param>
+    public static void CreateAccounting(string userID, string caption, int amount, int actType, string body)
+    {
+        // <<<<< check  input >>>>>
+        if (amount < 0 || amount > 1000000)
+            throw new ArgumentException("Amount must between 0 and 1,000,000 .");
+        if (actType < 0 || actType > 1)
+            throw new ArgumentException("ActType must be 0 or 1.");
+        // <<<<< check  input >>>>>
 
-            string connStr = DBHelper.GetConnectionString();
-            string dbCommand =
-                $@" INSERT INTO [dbo].[Accounting]
+        string connStr = DBHelper.GetConnectionString();
+        string dbCommand =
+            $@" INSERT INTO [dbo].[Accounting]
                     (   User ID         
                         ,Caption       
                         ,Amount         
@@ -122,49 +105,49 @@ namespace AccountingNote.DBSource
                         @createDate
                         @body
                     ) ";
-            // connect db % execute
-            using (SqlConnection conn = new SqlConnection(connStr))
+        // connect db % execute
+        using (SqlConnection conn = new SqlConnection(connStr))
+        {
+            using (SqlCommand comm = new SqlCommand(dbCommand, conn))
             {
-                using (SqlCommand comm = new SqlCommand(dbCommand, conn))
-                {
-                    comm.Parameters.AddWithValue("@userID", userID);
-                    comm.Parameters.AddWithValue("@caption", caption);
-                    comm.Parameters.AddWithValue("@amount", amount);
-                    comm.Parameters.AddWithValue("@actType", actType);
-                    comm.Parameters.AddWithValue("@createDate", DateTime.Now);
-                    comm.Parameters.AddWithValue("@body", body);
+                comm.Parameters.AddWithValue("@userID", userID);
+                comm.Parameters.AddWithValue("@caption", caption);
+                comm.Parameters.AddWithValue("@amount", amount);
+                comm.Parameters.AddWithValue("@actType", actType);
+                comm.Parameters.AddWithValue("@createDate", DateTime.Now);
+                comm.Parameters.AddWithValue("@body", body);
 
-                    try
-                    {
-                        conn.Open();
-                        comm.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.WriteLog(ex);
-                    }
+                try
+                {
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
                 }
             }
         }
+    }
 
 
-        /// <summary> 建立流水帳 </summary>
-        /// <param name="ID"></param>
-        /// <param name="caption"></param>
-        /// <param name="amount"></param>
-        /// <param name="actType"></param>
-        /// <param name="body"></param>
-        public static bool UpdateAccounting(int ID, string userID, string caption, int amount, int actType, string body)
-        {   // <<<<< check  input >>>>>
-            if (amount < 0 || amount > 1000000)
-                throw new ArgumentException("Amount must between 0 and 1,000,000 .");
-            if (actType < 0 || actType > 1)
-                throw new ArgumentException("ActType must be 0 or 1.");
-            // <<<<< check  input >>>>>
+    /// <summary> 建立流水帳 </summary>
+    /// <param name="ID"></param>
+    /// <param name="caption"></param>
+    /// <param name="amount"></param>
+    /// <param name="actType"></param>
+    /// <param name="body"></param>
+    public static bool UpdateAccounting(int ID, string userID, string caption, int amount, int actType, string body)
+    {   // <<<<< check  input >>>>>
+        if (amount < 0 || amount > 1000000)
+            throw new ArgumentException("Amount must between 0 and 1,000,000 .");
+        if (actType < 0 || actType > 1)
+            throw new ArgumentException("ActType must be 0 or 1.");
+        // <<<<< check  input >>>>>
 
-            string connStr = DBHelper.GetConnectionString();
-            string dbCommand =
-                $@" UPDATE [Accounting]
+        string connStr = DBHelper.GetConnectionString();
+        string dbCommand =
+            $@" UPDATE [Accounting]
                     SET
                         UserID         = @user ID
                         ,Caption        = @caption
@@ -175,65 +158,65 @@ namespace AccountingNote.DBSource
                     WHERE
                         ID = @id";
 
-            // connect db % execute
-            using (SqlConnection conn = new SqlConnection(connStr))
-            {
-                using (SqlCommand comm = new SqlCommand(dbCommand, conn))
-                {
-                    comm.Parameters.AddWithValue("@userID", userID);
-                    comm.Parameters.AddWithValue("@caption", caption);
-                    comm.Parameters.AddWithValue("@amount", amount);
-                    comm.Parameters.AddWithValue("@actType", actType);
-                    comm.Parameters.AddWithValue("@createDate", DateTime.Now);
-                    comm.Parameters.AddWithValue("@body", body);
-                    comm.Parameters.AddWithValue("@id", ID);
-
-                    try
-                    {
-                        conn.Open();
-                        int effectRows = comm.ExecuteNonQuery();
-
-                        if (effectRows == 1)
-                            return true;
-                        else
-                            return false;
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.WriteLog(ex);
-                        return false;
-                    }
-                }
-            }
-        }
-
-        /// <summary> 刪除流水帳 </summary>
-        /// <param name="ID"></param>
-        public static void DeleteAccounting(int ID)
+        // connect db % execute
+        using (SqlConnection conn = new SqlConnection(connStr))
         {
-            string connStr = DBHelper.GetConnectionString();
-            string dbCommand =
-                $@" DELETE [Accounting]
-                    WHERE ID = @id";
-
-            // connect db % execute
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (SqlCommand comm = new SqlCommand(dbCommand, conn))
             {
-                using (SqlCommand comm = new SqlCommand(dbCommand, conn))
-                {
-                    comm.Parameters.AddWithValue("@id", ID);
+                comm.Parameters.AddWithValue("@userID", userID);
+                comm.Parameters.AddWithValue("@caption", caption);
+                comm.Parameters.AddWithValue("@amount", amount);
+                comm.Parameters.AddWithValue("@actType", actType);
+                comm.Parameters.AddWithValue("@createDate", DateTime.Now);
+                comm.Parameters.AddWithValue("@body", body);
+                comm.Parameters.AddWithValue("@id", ID);
 
-                    try
-                    {
-                        conn.Open();
-                        comm.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.WriteLog(ex);
-                    }
+                try
+                {
+                    conn.Open();
+                    int effectRows = comm.ExecuteNonQuery();
+
+                    if (effectRows == 1)
+                        return true;
+                    else
+                        return false;
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
+                    return false;
                 }
             }
         }
     }
+
+    /// <summary> 刪除流水帳 </summary>
+    /// <param name="ID"></param>
+    public static void DeleteAccounting(int ID)
+    {
+        string connStr = DBHelper.GetConnectionString();
+        string dbCommand =
+            $@" DELETE [Accounting]
+                    WHERE ID = @id";
+
+        // connect db % execute
+        using (SqlConnection conn = new SqlConnection(connStr))
+        {
+            using (SqlCommand comm = new SqlCommand(dbCommand, conn))
+            {
+                comm.Parameters.AddWithValue("@id", ID);
+
+                try
+                {
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
+                }
+            }
+        }
+    }
+}
 }

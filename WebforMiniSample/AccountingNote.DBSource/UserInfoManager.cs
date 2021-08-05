@@ -19,36 +19,19 @@ namespace AccountingNote.DBSource
                     FROM UserInfo
                     WHERE [Account] = @account
                  ";
-            // using連線、下命令
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(dbCommandString, connection))
-                {   //單數化查詢
-                    command.Parameters.AddWithValue("@account", account);
 
-                    try
-                    {   //開始連線
-                        connection.Open();
-                        //查資料
-                        SqlDataReader reader = command.ExecuteReader();
-                        //沒問題把資料放到 DataTable
-                        DataTable dt = new DataTable();
-                        dt.Load(reader);
-                        reader.Close();
-                        //假設沒有值回傳 null
-                        if (dt.Rows.Count == 0)
-                            return null;
-                        //假設有值回傳 dr
-                        DataRow dr = dt.Rows[0];
-                        return dr;
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.WriteLog(ex);
-                        return null;
-                    }
-                }
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@account", account));
+
+            try 
+            { 
+                return DBHelper.ReadDataRow(connectionString, dbCommandString, list); 
             }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }          
         }
     }
 }
