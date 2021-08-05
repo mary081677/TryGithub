@@ -27,7 +27,7 @@
                         <tr>
                             <th>帳號</th>
                             <td>
-                                <asp:Literal runat="server" ID="ltAccount"></asp:Literal></td>
+                                <asp:Literal ID="ltAccount" runat="server"></asp:Literal></td>
                         </tr>
                         <tr>
                             <th>姓名</th>
@@ -42,13 +42,14 @@
                         <tr>
                             <th>等級</th>
                             <td>
-                                <asp:Literal ID="ltUserLevel"runat="server" ></asp:Literal></td>
+                                <asp:Literal ID="ltUserLevel" runat="server"></asp:Literal></td>
                         </tr>
                         <tr>
                             <th>建立時間</th>
                             <td>
-                               <asp:BoundField HeaderText="建立時間" DataField="CreateDate"
-                        DataFormatString="{0:yyyy-MM-dd}" /></td>
+                                <asp:BoundField HeaderText="建立時間" DataField="CreateDate"
+                                    DataFormatString="{0:yyyy-MM-dd}" />
+                            </td>
                         </tr>
                     </table>
                     <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
@@ -56,6 +57,8 @@
                     <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click" />
                     <br />
                     <asp:Button ID="btnPassword" runat="server" Text="前往變更密碼" OnClick="btnPassword_Click" />
+                    <br />
+                    <asp:Literal ID="ltMsg" runat="server"></asp:Literal>
                 </td>
             </tr>
         </table>

@@ -32,20 +32,22 @@
                         <tr>
                             <th>舊密碼</th>
                             <td>
-                                <asp:TextBox ID="txtName" runat="server"></asp:TextBox></td>
+                                <asp:TextBox ID="txtPWD" runat="server"></asp:TextBox></td>
                         </tr>
                         <tr>
                             <th>確認密碼</th>
                             <td>
-                                <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox></td>
+                                <asp:TextBox ID="txtCheckPWD" runat="server"></asp:TextBox></td>
                         </tr>
                         <tr>                            
                             <th>新密碼</th>
                             <td>
-                                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox></td>
+                                <asp:TextBox ID="txtNewPWD" runat="server"></asp:TextBox></td>
                         </tr>
                     </table>
                     <asp:Button ID="btnNewPassword" runat="server" Text="變更密碼" OnClick="btnNewPassword_Click" />
+                    <br />
+                    <asp:Literal ID="ltMsg" runat="server"></asp:Literal>
                 </td>
             </tr>
         </table>

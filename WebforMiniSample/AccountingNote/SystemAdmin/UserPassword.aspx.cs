@@ -14,9 +14,25 @@ namespace _1.UserDetail
 
         }
 
+        public static bool Equals(string txtCheckPWD, string txtNewPWD)
+        {
+            List<string> msgList = new List<string>();
+            if (txtCheckPWD.ToString() == txtNewPWD.ToString())
+            {
+                msgList.Add("密碼修改成功 !");
+            }
+            else
+            {
+                 msgList.Add("請重新確認密碼是否一致");
+            }
+            if (msgList.Count == 0)//沒有錯誤訊息
+                return true;
+            else                   //有錯誤訊息
+                return false;
+        }
         protected void btnNewPassword_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("/SystemAdmin/Login.aspx");
         }
     }
 }
