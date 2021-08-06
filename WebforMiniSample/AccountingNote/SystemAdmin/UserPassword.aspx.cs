@@ -30,17 +30,43 @@ namespace _1.UserDetail
         }
 
         protected void btnNewPassword_Click(object sender, EventArgs e)
-        {          
-            List<string> msgList = new List<string>();
-            
-            if (txtCheckPWD.ToString() == txtNewPWD.ToString())
+        {
+            string inp_PWD = this.txtPWD.Text;
+            string msg;
+            if (!AuthManager.TryLogin(inp_PWD, out msg))
             {
-                msgList.Add("密碼修改成功 !");
+                this.ltMsg.Text = msg;
+                return;
             }
-            else
+            //登入認證成功
+            this.PWDPlaceHolder.Visible = true;
+            this.ltMsg.Text = "設置密碼時，請將密碼長度設定於8~16碼之間";
+
+            //檢查密碼字數對不對
+            if (string.IsNullOrWhiteSpace(this.txtPWD.Text))
             {
-                msgList.Add("請重新確認密碼是否一致");
+                this.ltMsg.Text = "密碼沒打";
+                return;
             }
+            else if (string.IsNullOrWhiteSpace(this.txtNewPWD.Text))
+            {
+                this.ltMsg.Text = "確認密碼欄位沒打";
+                return;
+            }
+            else if (this.txtNewPWD.Text.CompareTo(this.txtCheckPWD.Text) != 0)
+            {
+                this.ltMsg.Text = "兩次輸入的密碼不相同";
+                return;
+            }
+            else if (this.txtNewPWD.Text.Length < 8 || this.txtNewPWD.Text.Length > 16)
+            {
+                this.ltMsg.Text = "密碼長度必須介於8~16碼之間";
+                return;
+            }
+            this.ltMsg.Text = "更改完成！";
+            var currentUser = AuthManager.GetCurrentUser();
+            UserInfoManager.UpdateUserPassword(currentUser.ID, this.txtNewPWD.Text);
+            Response.Redirect($"UserDetail.aspx?ID={currentUser.ID}&Txt=changeisgood");
         }
     }
 }

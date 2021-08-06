@@ -47,7 +47,7 @@
                         <tr>
                             <th>建立時間</th>
                             <td>
-                                <asp:Literal ID="datatime" runat="server"></asp:Literal></td>
+                                <asp:Literal ID="ltdatatime" runat="server" ></asp:Literal></td>
                         </tr>
             </table>
                     <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />

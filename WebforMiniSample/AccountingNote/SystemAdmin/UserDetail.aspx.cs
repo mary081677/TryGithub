@@ -31,11 +31,31 @@ namespace _1.UserDetail
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            List<string> msgList = new List<string>();
+            if (!this.CheckInput(out msgList))
+            {
+                this.ltMsg.Text = string.Join("<br/>", msgList);
+                return;
+            }
             Response.Redirect("/SystemAdmin/UserList.aspx");
 
         }
 
-        protected void btnDelete_Click(object sender, EventArgs e)
+        private bool CheckInput(out List<string> errorMsgList)
+        {
+            List<string> msgList = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(this.txtName.Text)) msgList.Add("姓名沒打");
+            if(string.IsNullOrWhiteSpace(this.txtEmail.Text)) msgList.Add("信箱沒打");
+
+            errorMsgList = msgList;
+            if (msgList.Count == 0)
+                return true;
+            else
+                return false;
+        }
+
+            protected void btnDelete_Click(object sender, EventArgs e)
         {
             string idText = this.Request.QueryString["ID"];
             if (!string.IsNullOrWhiteSpace(idText))

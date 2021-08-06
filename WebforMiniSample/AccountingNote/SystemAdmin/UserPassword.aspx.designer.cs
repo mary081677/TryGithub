@@ -42,6 +42,15 @@ namespace _1.UserDetail
         protected global::System.Web.UI.WebControls.TextBox txtPWD;
 
         /// <summary>
+        /// txtNewPWD 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNewPWD;
+
+        /// <summary>
         /// txtCheckPWD 控制項。
         /// </summary>
         /// <remarks>
@@ -51,13 +60,13 @@ namespace _1.UserDetail
         protected global::System.Web.UI.WebControls.TextBox txtCheckPWD;
 
         /// <summary>
-        /// txtNewPWD 控制項。
+        /// PWDPlaceHolder 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNewPWD;
+        protected global::System.Web.UI.WebControls.PlaceHolder PWDPlaceHolder;
 
         /// <summary>
         /// btnNewPassword 控制項。

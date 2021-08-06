@@ -34,18 +34,22 @@
                             <td>
                                 <asp:TextBox ID="txtPWD" runat="server"></asp:TextBox></td>
                         </tr>
+                        新密碼:
                         <tr>
                             <th>確認密碼</th>
                             <td>
-                                <asp:TextBox ID="txtCheckPWD" runat="server"></asp:TextBox></td>
-                        </tr>
-                        <tr>                            
-                            <th>新密碼</th>
-                            <td>
                                 <asp:TextBox ID="txtNewPWD" runat="server"></asp:TextBox></td>
                         </tr>
+                        確認新密碼一致:
+                        <tr>
+                            <th>新密碼</th>
+                            <td>
+                                <asp:TextBox ID="txtCheckPWD" runat="server"></asp:TextBox></td>
+                        </tr>                        
                     </table>
+                     <asp:PlaceHolder ID="PWDPlaceHolder" runat="server" Visible="false">
                     <asp:Button ID="btnNewPassword" runat="server" Text="變更密碼" OnClick="btnNewPassword_Click" />
+                     </asp:PlaceHolder>
                     <br />
                     <asp:Literal ID="ltMsg" runat="server"></asp:Literal>
                 </td>
