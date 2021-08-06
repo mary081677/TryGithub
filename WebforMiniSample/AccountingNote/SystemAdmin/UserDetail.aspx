@@ -40,14 +40,14 @@
                                 <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox></td>
                         </tr>
                         <tr>
-                            <th>等級</th>
+                            <th>密碼</th>
                             <td>
-                                <asp:Literal ID="ltUserLevel" runat="server"></asp:Literal></td>
+                                <asp:TextBox ID="txtPWD" runat="server"></asp:TextBox></td>
                         </tr>
                         <tr>
-                            <th>建立時間</th>
+                            <th>確認密碼</th>
                             <td>
-                                <asp:Literal ID="ltdatatime" runat="server" ></asp:Literal></td>
+                                <asp:TextBox ID="txtCheckPWD" runat="server"></asp:TextBox></td>
                         </tr>
             </table>
                     <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />

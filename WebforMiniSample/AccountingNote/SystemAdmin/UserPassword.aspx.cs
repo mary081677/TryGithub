@@ -45,17 +45,17 @@ namespace _1.UserDetail
             //檢查密碼字數對不對
             if (string.IsNullOrWhiteSpace(this.txtPWD.Text))
             {
-                this.ltMsg.Text = "密碼沒打";
+                this.ltMsg.Text = "請輸入密碼";
                 return;
             }
             else if (string.IsNullOrWhiteSpace(this.txtNewPWD.Text))
             {
-                this.ltMsg.Text = "確認密碼欄位沒打";
+                this.ltMsg.Text = "請輸入確認密碼欄位";
                 return;
             }
             else if (this.txtNewPWD.Text.CompareTo(this.txtCheckPWD.Text) != 0)
             {
-                this.ltMsg.Text = "兩次輸入的密碼不相同";
+                this.ltMsg.Text = "兩次密碼輸入不相同";
                 return;
             }
             else if (this.txtNewPWD.Text.Length < 8 || this.txtNewPWD.Text.Length > 16)

@@ -21,10 +21,9 @@
                     <a href="AccountingList.aspx">流水帳管理</a><br />
                     <a href="UserList.aspx">會員管理</a>
                 </td>
-                <td>
-                    <!--這裡放主要內容-->
+                <td>                   
                     <table>
-                        <tr>
+                        <tr> <!--這裡放主要內容-->
                             <th>帳號</th>
                             <td>
                                 <asp:Literal runat="server" ID="ltAccount"></asp:Literal></td>
@@ -33,14 +32,12 @@
                             <th>舊密碼</th>
                             <td>
                                 <asp:TextBox ID="txtPWD" runat="server"></asp:TextBox></td>
-                        </tr>
-                        新密碼:
+                        </tr>                        
                         <tr>
                             <th>確認密碼</th>
                             <td>
                                 <asp:TextBox ID="txtNewPWD" runat="server"></asp:TextBox></td>
-                        </tr>
-                        確認新密碼一致:
+                        </tr>                       
                         <tr>
                             <th>新密碼</th>
                             <td>
