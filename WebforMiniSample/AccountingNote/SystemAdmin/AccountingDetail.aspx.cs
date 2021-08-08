@@ -1,4 +1,5 @@
-﻿using AccountingNote.DBSource;
+﻿using AccountingNote.Auth;
+using AccountingNote.DBSource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +13,18 @@ namespace _1.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //check is logined
-            //看看有沒有登入，把帳號拿出來
-            if (this.Session["UserLoginInfo"] == null)
+            //check is logined 檢查登入
+            if (!AuthManager.IsLogined())
             {
                 Response.Redirect("/Login.aspx");
                 return;
             }
             //用Session取得資料再轉型
             string account = this.Session["UserLoginInfo"] as string;
-            var drUserInfo = UserInfoManager.GetUserInfoByAccount(account); //透過帳號去查個人資訊的ID
-
-            if (drUserInfo == null)
+            var currentUser = AuthManager.GetCurrentUser();
+            if (currentUser == null)                      //如果帳號不存在，導入登入頁
             {
+                this.Session["UserLoginInfo"] = null;   //清理不必要的資料再導回
                 Response.Redirect("/Login.aspx");
                 return;
             }
@@ -43,7 +43,7 @@ namespace _1.SystemAdmin
                     int id;
                     if (int.TryParse(idText, out id))
                     {
-                        var drAccounting = AccountingManager.GetAccounting(id, drUserInfo["ID"].ToString());
+                        var drAccounting = AccountingManager.GetAccounting(id, currentUser.ID);
 
                         if (drAccounting == null)
                         {
@@ -80,16 +80,14 @@ namespace _1.SystemAdmin
                 return;
             }
 
-            string account = this.Session["UserLoginInfo"] as string;
-            var dr = UserInfoManager.GetUserInfoByAccount(account); //透過帳號去查個人資訊的ID
-
-            if (dr == null)
+            UserInfoModel currentUser = AuthManager.GetCurrentUser();  
+            if (currentUser == null)
             {
                 Response.Redirect("/Login.aspx");
                 return;
             }
 
-            string userID = dr["ID"].ToString();
+            string userID = currentUser.ID;
             string actTypeText = this.ddlActType.SelectedValue;
             string amountText = this.txtAmount.Text;
             string caption = this.txtCaption.Text;

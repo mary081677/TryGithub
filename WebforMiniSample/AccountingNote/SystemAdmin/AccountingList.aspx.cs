@@ -1,4 +1,5 @@
-﻿using AccountingNote.DBSource;
+﻿using AccountingNote.Auth;
+using AccountingNote.DBSource;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,27 +15,25 @@ namespace _1.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //check is logined
-            //看看有沒有登入，把帳號拿出來
-            if (this.Session["UserLoginInfo"] == null)
+            //check is logined 檢查登入
+            if(!AuthManager.IsLogined())
             {
                 Response.Redirect("/Login.aspx");
                 return;
             }
-            //用Session取得資料再轉型
-            string account = this.Session["UserLoginInfo"] as string;
-            var dr = UserInfoManager.GetUserInfoByAccount(account); //透過帳號去查個人資訊的ID
 
-            if (dr == null)
+            var currentUser = AuthManager.GetCurrentUser();
+            if (currentUser == null)                      //如果帳號不存在，導入登入頁
             {
+                this.Session["UserLoginInfo"] = null;   //清理不必要的資料再導回
                 Response.Redirect("/Login.aspx");
                 return;
             }
 
             // read accounting data
-            var dt = AccountingManager.GetAccountingList(dr["ID"].ToString()); //透過ID去找帳本資料
-            //大於0就做資料細節； check is empty data
-            if (dt.Rows.Count > 0)
+            var dt = AccountingManager.GetAccountingList(currentUser.ID); //透過ID去找帳本資料
+            
+            if (dt.Rows.Count > 0)//大於0就做資料細節； check is empty data
             {
                 this.gvAccountingList.DataSource = dt; //查出資料後做資料細節
                 this.gvAccountingList.DataBind();

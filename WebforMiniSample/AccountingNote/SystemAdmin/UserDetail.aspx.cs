@@ -79,6 +79,35 @@ namespace _1.UserDetail
                 this.ltMsg.Text = string.Join("<br/>", msgList);
                 return;
             }
+
+            UserInfoModel currentUser = AuthManager.GetCurrentUser();
+            string isnew = this.Session["FromUserDetail"] as string;
+            if (isnew != null && isnew.CompareTo("yesfromdetail") == 0)//若使用者是第一位，則破例讓他創
+            { }
+            else if (currentUser == null)
+            {
+                Response.Redirect("/Login.aspx");
+                return;
+            }
+
+            //string userID = currentUser.ID;
+            string account = this.ltAccount.Text;
+            string name = this.txtName.Text;
+            string email = this.txtEmail.Text;
+
+
+            string idText = this.Request.QueryString["ID"];
+            if (string.IsNullOrWhiteSpace(idText))
+            {
+                string pwd = this.txtPWD.Text;
+                UserInfoManager.CreateUser(account, pwd, name, email);
+                //AccountingManager.CreateAccounting(userID, caption, amount, actType, body);
+            }
+            else
+            {
+                UserInfoManager.UpdateUser(idText, account, name, email);
+            }
+
             Response.Redirect("/SystemAdmin/UserList.aspx");
 
         }
